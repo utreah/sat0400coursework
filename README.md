@@ -2,7 +2,7 @@
 SAT0400 Computing and Digital Tech COURSEWORK
 Basic Restaurant/Cafe Order system with:
 -Add or Remove Item \
--Automatic price adjuster when you add or remove item(s)
+-Automatic price adjuster when you add or remove item(s) \
 -Item counter -> Corona Bottle x2 {price*amountOfItem}
 -Customer name checker(can't have number(s) or symbol(s) in your name)
 -Credit Card checker (Not mm/yy, I use dd/mm just in case)
