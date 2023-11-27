@@ -1,5 +1,5 @@
-# sat0400coursework
-SAT0400 Computing and Digital Tech COURSEWORK
+# sat0400coursework\
+SAT0400 Computing and Digital Tech COURSEWORK\
 Basic Restaurant/Cafe Order system with:\
 -Add or Remove Item \
 -Automatic price adjuster when you add or remove item(s) \
