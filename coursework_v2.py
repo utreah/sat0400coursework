@@ -9,7 +9,7 @@ import random
 # [DONE] ADD while loop to customer_coupon_answer so if the customer types something different than y/n, they'll have another chance (maybe we can add a limit like max 3 attempts)
 # [DONE] FINISH VALIDITYCHECKS FOR NAME -> NOT STARTED AT ALL <- 4 days later "DONE"
 # [DONE] MERGE CUSTOMERPAYMENTPAGE AND COUPON FUNCTION. MAKE THEM WORK TOGETHER -> ALMOST DONE, NEED TO CODE SMT TO CHECK MONTH AND DAY CHECK FOR CARD PAYMENTS <- "DONE"
-# [BUG/SOLVED] CHANGE WHILE LOOP (AT LEAST ONE OF THEM MUST HAVE A CONDITION) - "SOLVED" -> now, the first while loop has a condition to exit.
+# [DONE] CHANGE WHILE LOOP (AT LEAST ONE OF THEM MUST HAVE A CONDITION) - "SOLVED" -> now, the first while loop has a condition to exit.
 # [BUG/SOLVED] CHECK ADJUST PRICE AND ITEM REMOVE FUNCTIONS. SMT WRONG WITH ADJUST PRICE. DOESN'T DELETE THE PRICE PROPERLY(%50 OF THE CASES) -> "SOLVED", total_price has been moved inside the loop. It wasn't being updated after adjustPrice function
 # [BUG/SOLVED] It applies discount, changing total_price but the first line of the while loop rewrites the original price back. -> total price adjuster has been moved outside the while loop, now prices are being updated every time a customer adds/removes an item.
 # [BUG/SOLVED] Another problem related to remove/add item function. "SOLVED" -> Removes the first item that the function encounters, then updates the price | SHOULD BE FIXED :(
