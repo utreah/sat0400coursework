@@ -11,3 +11,4 @@ Basic Restaurant/Cafe Order system with:
 
 Python version 3.8.10
 Run it with windows console or os.system("cls||clear") won't work.
+s
