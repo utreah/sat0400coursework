@@ -53,7 +53,7 @@ def customer_printMenu():
     print("|---------------------------------------------|")
     print("\t\t Alcohol Menu")
     print("NOTE: This section has age restirictions. If you are not 18 or above you CAN NOT order beverages contains ALCOHOL!")
-    print(f"|->\n 7-Corona Bottle {price_list[6]}£\n 8-Moretti Pint {price_list[7]}£\n 9-Guiness Pint {price_list[8]}£")
+    print(f"|->\n 7-Corona Bottle {price_list[6]}£\n 8-Moretti Pint {price_list[7]}£\n 9-Guinness Pint {price_list[8]}£")
 
 def customer_appendChoices(customer_item_choices, customer_age):
     if len(customer_item_choices) < 4: # If item name is less than 4 characters, it will return false -> This check was added to prevent adding different products containing the same letters.
@@ -228,7 +228,7 @@ def customer_payment_page(total_price): # NOTE to MYSELF: JUST USE SOME RANDOM N
 
     
 total_price = 0
-customer_name = str(input("Name : "))
+customer_name = str(input("Hi, welcome to our cafe. What is your name? : "))
 is_customer_name_valid = False
 while is_customer_name_valid != True:
     if is_valid_name(customer_name):
@@ -245,7 +245,7 @@ while is_customer_age_valid != True:
         print("Okay,",customer_name,"you are ",customer_age," years old.")
         break
     else:
-        customer_age_str = input("I need to know your age to show our menu. How old are you? : ")
+        customer_age_str = input("Invalid age. Age should not contain symbols or characters.\nPlease enter your age, again. :")
     
 print("Menu will be printed in 5 seconds and this screen will be cleared!")
 time.sleep(5)
@@ -288,6 +288,7 @@ while True:
                 break
             customer_appendChoices(customer_Take_Order, customer_age)
         total_price = customer_basket_total_price(selected_items_total_price)
+        os.system("clear||cls")
 ##    elif customer_menu_choice == 4: # will be merged with option 5
 ##        customerCoupon = (input("Please provide your coupon code: "))
 ##        totalPrice_after_discount = customer_applyCoupon(customerCoupon,total_price)
