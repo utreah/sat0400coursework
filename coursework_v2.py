@@ -16,7 +16,6 @@ import random
 # [BUG/SOLVED] If mm/dd is wrong (less than 1 or above 12) it still prints successful. -> "SOLVED" whole thing has been rewritten from scratch. Works 
 # [BUG/SOLVED] After finishing the payment, customer_menu_choice still takes input. Find a way to fix it -> "SOLVED" just added "break" to option 4 :D
 # [BUG/CHANGED LOGIC] "After finishing the payment, customer_menu_choice still takes input" now it returns True and its being checked in option 4 "if xxx == True: break" This also allowed me to check if total_price < 0 print error.
-
 selected_items = []
 selected_items_total_price = []
 price_list = [5.95, 6.95, 4.95, 2.00, 2.50, 2.10, 6.80, 7.10, 5.43]
