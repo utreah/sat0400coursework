@@ -10,11 +10,12 @@ import random
 # [DONE] FINISH VALIDITYCHECKS FOR NAME -> NOT STARTED AT ALL <- 4 days later "DONE"
 # [DONE] MERGE CUSTOMERPAYMENTPAGE AND COUPON FUNCTION. MAKE THEM WORK TOGETHER -> ALMOST DONE, NEED TO CODE SMT TO CHECK MONTH AND DAY CHECK FOR CARD PAYMENTS <- "DONE"
 # [DONE] CHANGE WHILE LOOP (AT LEAST ONE OF THEM MUST HAVE A CONDITION) - "SOLVED" -> now, the first while loop has a condition to exit.
-# [BUG/SOLVED] CHECK ADJUST PRICE AND ITEM REMOVE FUNCTIONS. SMT WRONG WITH ADJUST PRICE. DOESN'T DELETE THE PRICE PROPERLY(%50 OF THE CASES) -> "SOLVED", total_price has been moved inside the loop. It wasn't being updated after adjustPrice function
+# [BUG/SOLVED] CHECK ADJUST PRICE AND ITEM REMOVE FUNCTIONS. SMT WRONG WITH ADJUST PRICE. DOESN'T DELETE THE PRICE PROPERLY(sometimes idk why) -> "SOLVED", total_price has been moved inside the loop. It wasn't being updated after adjustPrice function
 # [BUG/SOLVED] It applies discount, changing total_price but first line of the while loop rewrites the original price back. -> total price adjuster has been moved outside the while loop, now prices are being updated every time a customer adds/removes an item.
 # [BUG/SOLVED] Another problem related to remove/add item function. "SOLVED" -> Removes the first item that the function encounters, then updates the price | SHOULD BE FIXED :(
-# [BUG/SOLVED] If mm/dd is wrong (less than 1 or above 12) it still prints successful. -> "SOLVED" whole thing has been rewritten from scratch. Works flawlessly, killed test cases.
+# [BUG/SOLVED] If mm/dd is wrong (less than 1 or above 12) it still prints successful. -> "SOLVED" whole thing has been rewritten from scratch. Works 
 # [BUG/SOLVED] After finishing the payment, customer_menu_choice still takes input. Find a way to fix it -> "SOLVED" just added "break" to option 4 :D
+# [BUG/CHANGED LOGIC] "After finishing the payment, customer_menu_choice still takes input" now it returns True and its being checked in option 4 "if xxx == True: break" This also allowed me to check if total_price < 0 print error.
 
 selected_items = []
 selected_items_total_price = []
@@ -59,6 +60,7 @@ def customer_appendChoices(customer_item_choices, customer_age):
         print("Use atleast 4 or more characters!")
         return False # returns false so customer can keep adding new item(s)
     item_found = False
+    age_restricted = False
     for itemNameToAppend, price in zip(menuArr, price_list):
         if customer_item_choices.lower() in itemNameToAppend.lower():
             age_restricted = False # flag for age restirected items 
@@ -70,6 +72,7 @@ def customer_appendChoices(customer_item_choices, customer_age):
             if not age_restricted: # If no flag 
                 selected_items.append(itemNameToAppend) # append food name
                 selected_items_total_price.append(price) # append Its price
+                print(f"Item '{itemNameToAppend}' has been added to the basket!")
                 item_found = True
     if not item_found and age_restricted == False:
         print(f"Item ''{customer_item_choices}'' cannot be found. Please check your spelling or make sure that item is on the menu!")
@@ -145,6 +148,10 @@ def customer_applyCoupon(customerCoupon,total_price_discounted_by_coupon):
                 return total_price_discounted_by_coupon
                 
 def customer_payment_page(total_price): # NOTE to MYSELF: JUST USE SOME RANDOM NUMBERS IT WILL ACCEPT ANYWAY ( I'll add some checks for date tho ) <- "DONE"
+    if total_price <= 0:
+        print(f"Basket total can't be 0 or less. Current Amount: {total_price}\nYou are being redirected back to Menu in 2 seconds")
+        time.sleep(2)
+        return False
     current_computer_time = time.strftime("%H:%M:%S")
     print(f"Amount that needs to be paid : {total_price:.2f}£")
     customer_coupon_answer_attempts = 0
@@ -153,8 +160,8 @@ def customer_payment_page(total_price): # NOTE to MYSELF: JUST USE SOME RANDOM N
             print("Attempts Left: ",3-customer_coupon_answer_attempts)
         customer_coupon_answer = input("Do you have a coupon?(y/n) : ")
         if "y" in customer_coupon_answer or "yes" in customer_coupon_answer or "Yes" in customer_coupon_answer:
-            customerCoupon = str(input("Can I have the coupon please? :"))
-            total_price_new_discounted = customer_applyCoupon(customerCoupon,total_price)
+            # customerCoupon = str(input("Can I have the coupon please? :"))
+            total_price_new_discounted = customer_applyCoupon("MDX5",total_price)
             print(f"New amount: {round(total_price_new_discounted,2)}£")
             break
         elif "n" in customer_coupon_answer or "no" in customer_coupon_answer or "No" in customer_coupon_answer:
@@ -167,6 +174,7 @@ def customer_payment_page(total_price): # NOTE to MYSELF: JUST USE SOME RANDOM N
             if customer_coupon_answer_attempts >= 3:
                 print("You are being redirected to payment page!")
                 break
+            
     customer_payment_way = input("How would you like to pay?\n1-Credit/Debit Card\n2-Cash\nChoice:")
 
     if "1" in customer_payment_way or "card" in customer_payment_way.lower():  # Use lower() to make the comparison case-insensitive
@@ -199,7 +207,7 @@ def customer_payment_page(total_price): # NOTE to MYSELF: JUST USE SOME RANDOM N
         # Validate month and day
                 if 1 <= customer_card_valid_date_mm <= 12 and 1 <= customer_card_valid_date_dd <= 31:
                     print("Payment has been processed at " + current_computer_time + ",Have a nice day!")
-                    break
+                    return True
                 else:
                     print("Invalid month or day in the date. Please try again.")
             else:
@@ -207,12 +215,15 @@ def customer_payment_page(total_price): # NOTE to MYSELF: JUST USE SOME RANDOM N
 
         
 
-    # Add the case for cash payment (too lazy to do anything so this WILL NEED TO do the work)
-    elif "2" in customer_payment_way:
+    # Add the case for cash payment 
+    elif "2" in customer_payment_way or "cash" in customer_payment_way or "Cash" in customer_payment_way:
         print("Payment by cash selected.")
         print(f"This table has been paid at {current_computer_time}, have a nice day!")
+        return True
     else:
         print("Invalid payment choice.")
+        
+        
         
 
     
@@ -258,7 +269,7 @@ while True:
         os.system("clear||cls")
         print_customer_basket(selected_items,selected_items_total_price)
         print(f"Total Price: {total_price:.2f}£")
-        print(GET_CURRENT_TIME)
+        print(f"Local Time: {GET_CURRENT_TIME}")
         print("------------------------------")
         total_price = customer_basket_total_price(selected_items_total_price)
     elif customer_menu_choice == 2:
@@ -287,8 +298,9 @@ while True:
         print("You are being redirected in 3 seconds, please wait.")
         time.sleep(3)
         os.system("clear||cls")
-        customer_payment_page(total_price)
-        break
+        #customer_payment_page(total_price)
+        if customer_payment_page(total_price) == True:
+            break
     else:
         print("Invalid choice!")
 time.sleep(6)
